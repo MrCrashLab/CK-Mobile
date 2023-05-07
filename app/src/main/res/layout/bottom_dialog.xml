@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:padding="10dp"
+    android:background="@drawable/sheetdesign"
+    android:orientation="vertical">
+
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_line" />
+
+    <TextView
+        android:id="@+id/nameParking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginRight="24dp"
+        android:fontFamily="@font/lato_black"
+        android:includeFontPadding="false"
+        android:text="Название парковки"
+        android:textStyle="normal"
+        android:textColor="@color/some_black"
+        android:textSize="36sp" />
+
+    <TextView
+        android:id="@+id/descParking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="24dp"
+        android:fontFamily="@font/lato_black"
+        android:includeFontPadding="false"
+        android:text="Название парковки"
+        android:textStyle="normal"
+        android:textColor="@color/grey"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:id="@+id/sheetCar"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageView3"
+                android:layout_width="70dp"
+                android:layout_height="67dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/black_car" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/lato_black"
+                android:layout_gravity="center"
+                android:text="Всего"
+                android:textStyle="normal"
+                android:textColor="@color/some_black"
+                android:textSize="26sp" />
+
+            <TextView
+                android:id="@+id/allText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/lato_black"
+                android:layout_gravity="center"
+                android:text="100"
+                android:textStyle="normal"
+                android:textColor="@color/some_black"
+                android:textSize="36sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageView4"
+                android:layout_width="70dp"
+                android:layout_height="67dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/blue_car" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/lato_black"
+                android:layout_gravity="center"
+                android:text="Свободно"
+                android:textStyle="normal"
+                android:textColor="@color/some_black"
+                android:textSize="26sp" />
+
+            <TextView
+                android:id="@+id/freeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/lato_black"
+                android:layout_gravity="center"
+                android:text="25"
+                android:textStyle="normal"
+                android:textColor="@color/some_black"
+                android:textSize="36sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageView5"
+                android:layout_width="67dp"
+                android:layout_gravity="center"
+                android:layout_height="67dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/red_car" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/lato_black"
+                android:layout_gravity="center"
+                android:text="Занято"
+                android:textStyle="normal"
+                android:textColor="@color/some_black"
+                android:textSize="26sp" />
+
+            <TextView
+                android:id="@+id/brokeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/lato_black"
+                android:layout_gravity="center"
+                android:text="75"
+                android:textStyle="normal"
+                android:textColor="@color/some_black"
+                android:textSize="36sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/parkButton"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:fontFamily="@font/lato_black"
+        android:textSize="24sp"
+        android:textColor="@color/some_black"
+        android:textStyle="normal"
+        android:text="Схема парковки"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/button_rounded"/>
+
+</LinearLayout>
