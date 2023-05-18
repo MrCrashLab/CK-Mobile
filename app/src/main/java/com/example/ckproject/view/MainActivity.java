@@ -1,18 +1,14 @@
-package com.example.ckproject;
+package com.example.ckproject.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.view.Window;
 import android.widget.Toast;
 
+import com.example.ckproject.R;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.normal.TedPermission;
 

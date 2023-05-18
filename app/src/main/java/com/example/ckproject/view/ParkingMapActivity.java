@@ -1,4 +1,4 @@
-package com.example.ckproject;
+package com.example.ckproject.view;
 
 import static com.gun0912.tedpermission.provider.TedPermissionProvider.context;
 
@@ -9,11 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.ckproject.MapService;
+import com.example.ckproject.listener.ButtonTapListener;
+import com.example.ckproject.R;
 import com.example.ckproject.model.Map;
-import com.example.ckproject.model.Point;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.squareup.picasso.Picasso;
 
@@ -34,13 +35,10 @@ public class ParkingMapActivity extends AppCompatActivity {
     private int id;
     private int floor = 1;
     private int floor_count = 0;
-    private final String BASE_URL = "http://192.168.0.106:8000";
+    private final String BASE_URL = "http://192.168.0.100:8000";
     private List<Map> maps;
     private LinearLayout btnGroup;
-    public interface MapService {
-        @GET("map/{parking_id}")
-        Call<List<Map>> getMap(@Path("parking_id") int parking_id);
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +79,7 @@ public class ParkingMapActivity extends AppCompatActivity {
                     }
                     floor_count++;
                 }
+                Log.println(Log.ASSERT, "Hello", imageUri);
                 Picasso
                     .with(context)
                     .load(imageUri)

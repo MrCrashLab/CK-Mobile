@@ -1,10 +1,11 @@
-package com.example.ckproject;
+package com.example.ckproject.listener;
 
 import static com.gun0912.tedpermission.provider.TedPermissionProvider.context;
 
 import android.view.View;
 import android.widget.Button;
 
+import com.example.ckproject.R;
 import com.example.ckproject.model.Map;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.squareup.picasso.Picasso;

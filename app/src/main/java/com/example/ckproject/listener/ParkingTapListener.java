@@ -1,4 +1,4 @@
-package com.example.ckproject;
+package com.example.ckproject.listener;
 
 import android.content.Intent;
 import android.util.Log;
@@ -11,6 +11,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ckproject.ParkingService;
+import com.example.ckproject.R;
+import com.example.ckproject.view.HomeActivity;
+import com.example.ckproject.view.ParkingMapActivity;
 import com.example.ckproject.model.Parking;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.yandex.mapkit.geometry.Point;
@@ -30,7 +34,7 @@ public class ParkingTapListener implements MapObjectTapListener {
     private BottomSheetDialog sheet;
     private Button parkButton;
     private int idParking = 0;
-    private final String BASE_URL = "http://192.168.0.106:8000";
+    private final String BASE_URL = "http://192.168.0.100:8000";
     private Map<MapObject, com.example.ckproject.model.Point> parkingPointMap = new HashMap<>();
 
     private AppCompatActivity currentActivity;
@@ -69,7 +73,7 @@ public class ParkingTapListener implements MapObjectTapListener {
         Log.println(Log.ASSERT, "YObjects", parkingPointMap.values().toString());
         int id = parkingPointMap.get(mapObject).getId();
         Log.println(Log.ASSERT, "Ya Ustal", String.valueOf(id));
-        HomeActivity.ParkingService service = retrofit.create(HomeActivity.ParkingService.class);
+        ParkingService service = retrofit.create(ParkingService.class);
         Call<Parking> call = service.getParking(id);
         call.enqueue(new Callback<Parking>() {
             @Override
