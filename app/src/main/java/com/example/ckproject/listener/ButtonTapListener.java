@@ -13,7 +13,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class ButtonTapListener implements View.OnClickListener {
-
     private int floor;
     private List<Map> maps;
     private PhotoView photoView;
