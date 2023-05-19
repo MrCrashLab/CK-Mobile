@@ -3,6 +3,8 @@ package com.example.ckproject.view;
 import static com.gun0912.tedpermission.provider.TedPermissionProvider.context;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +17,7 @@ import com.example.ckproject.MapService;
 import com.example.ckproject.listener.ButtonTapListener;
 import com.example.ckproject.R;
 import com.example.ckproject.model.Map;
+import com.example.ckproject.viewmodel.LogicMap;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.squareup.picasso.Picasso;
 
@@ -35,10 +38,9 @@ public class ParkingMapActivity extends AppCompatActivity {
     private int id;
     private int floor = 1;
     private int floor_count = 0;
-    private final String BASE_URL = "http://192.168.0.100:8000";
-    private List<Map> maps;
+    private MutableLiveData<List<Map>> maps;
     private LinearLayout btnGroup;
-
+    LogicMap logic = new LogicMap();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,20 +59,15 @@ public class ParkingMapActivity extends AppCompatActivity {
         btn2 = findViewById(R.id.btn_floor2);
         btn3 = findViewById(R.id.btn_floor3);
         btn4 = findViewById(R.id.btn_floor4);
+        maps = new MutableLiveData<>();
         getImageMap();
     }
 
     private void getImageMap(){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        MapService service = retrofit.create(MapService.class);
-        Call<List<Map>> call = service.getMap(id);
-        call.enqueue(new Callback<List<Map>>() {
+        logic.getParkingMap(id, maps);
+        maps.observe(this, new Observer<List<Map>>() {
             @Override
-            public void onResponse(Call<List<Map>> call, Response<List<Map>> response) {
-                maps = response.body();
+            public void onChanged(List<Map> maps) {
                 floor_count = 0;
                 String imageUri = new String("");
                 for (Map m : maps){
@@ -93,11 +90,6 @@ public class ParkingMapActivity extends AppCompatActivity {
                 btn2.setOnClickListener(new ButtonTapListener(2, btn1, btn3, btn4, maps, photoView));
                 btn3.setOnClickListener(new ButtonTapListener(3, btn1, btn2, btn4, maps, photoView));
                 btn4.setOnClickListener(new ButtonTapListener(4, btn1, btn2, btn3, maps, photoView));
-            }
-
-            @Override
-            public void onFailure(Call<List<Map>> call, Throwable t) {
-                Toast.makeText(ParkingMapActivity.this, "You have internet problem!", Toast.LENGTH_SHORT).show();
             }
         });
     }

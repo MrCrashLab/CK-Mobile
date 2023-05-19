@@ -1,15 +1,22 @@
 package com.example.ckproject.viewmodel;
 
+import static com.gun0912.tedpermission.provider.TedPermissionProvider.context;
+
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.ckproject.MapService;
 import com.example.ckproject.ParkingService;
 import com.example.ckproject.R;
+import com.example.ckproject.listener.ButtonTapListener;
 import com.example.ckproject.model.Parking;
 import com.example.ckproject.model.Point;
+import com.example.ckproject.view.ParkingMapActivity;
+import com.squareup.picasso.Picasso;
 import com.yandex.mapkit.map.MapObject;
 
 import java.util.ArrayList;
@@ -62,22 +69,29 @@ public class LogicMap {
             @Override
             public void onResponse(Call<Parking> call, Response<Parking> response) {
                 parking.setValue(response.body());
-//                TextView nameParking = (TextView) sheetView.findViewById(R.id.nameParking);
-//                TextView descParking = (TextView) sheetView.findViewById(R.id.descParking);
-//                TextView freeText = (TextView) sheetView.findViewById(R.id.freeText);
-//                TextView allText = (TextView) sheetView.findViewById(R.id.allText);
-//                TextView brokeText = (TextView) sheetView.findViewById(R.id.brokeText);
-//                idParking = response.body().getId();
-//                nameParking.setText(response.body().getName());
-//                descParking.setText(response.body().getDescription());
-//                freeText.setText(String.valueOf(response.body().getFree_slot()));
-//                allText.setText(String.valueOf(response.body().getAll_slot()));
-//                brokeText.setText(String.valueOf(response.body().getAll_slot() - response.body().getFree_slot()));
             }
-
             @Override
             public void onFailure(Call<Parking> call, Throwable t) {
                 getParkingInfo(parking, parkingPointMap, mapObject);
+            }
+        });
+    }
+    public void getParkingMap(int id, MutableLiveData<List<com.example.ckproject.model.Map>> maps){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        MapService service = retrofit.create(MapService.class);
+        Call<List<com.example.ckproject.model.Map>> call = service.getMap(id);
+        call.enqueue(new Callback<List<com.example.ckproject.model.Map>>() {
+            @Override
+            public void onResponse(Call<List<com.example.ckproject.model.Map>> call, Response<List<com.example.ckproject.model.Map>> response) {
+                maps.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<com.example.ckproject.model.Map>> call, Throwable t) {
+                getParkingMap(id, maps);
             }
         });
     }
