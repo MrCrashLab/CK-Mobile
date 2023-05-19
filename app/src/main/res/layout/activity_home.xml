@@ -16,20 +16,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/editTextTextPersonName2"
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/editTextSearch"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="24dp"
-                android:inputType="textPersonName"
                 android:background="@drawable/rounded_edittext"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp"
                 android:elevation="7dp"
-                android:hint="@string/find_text" />
+                app:queryHint="@string/find_text"
+                app:iconifiedByDefault="false"/>
 
         </com.yandex.mapkit.mapview.MapView>
     </FrameLayout>

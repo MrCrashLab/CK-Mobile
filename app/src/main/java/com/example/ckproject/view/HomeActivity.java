@@ -4,9 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
+import android.content.Context;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.Toast;
+
+import androidx.appcompat.widget.SearchView;
 
 import com.example.ckproject.listener.ParkingTapListener;
 import com.example.ckproject.R;
@@ -38,7 +43,10 @@ public class HomeActivity extends AppCompatActivity {
     private final com.yandex.mapkit.geometry.Point TARGET_LOCATION = new com.yandex.mapkit.geometry.Point(59.952, 30.318);
     private Map<MapObject, Point> parkingPointMap = new HashMap<>();
     private MutableLiveData<List<Point>> pointsLive = new MutableLiveData<>();
+    private MutableLiveData<Map<String, Integer>> parkingNamesLive = new MutableLiveData<>();
+    private Map<String, Integer> parkingNames = new HashMap<>();
     private MapObjectTapListener listener = new ParkingTapListener(sheet, parkButton, idParking, parkingPointMap, this);
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,38 @@ public class HomeActivity extends AppCompatActivity {
         MapKitFactory.setApiKey("3a3187b3-3c9c-48d4-90f2-c4bb76205eb8");
         setContentView(R.layout.activity_home);
         MapKitFactory.initialize(this);
+        searchView = findViewById(R.id.editTextSearch);
+        searchView.clearFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                if (parkingNames.keySet().contains(s) && pointsLive.getValue() != null){
+                    double lati = 59.952,  longi = 30.318;
+                    for(Point i : pointsLive.getValue()){
+                        if(i.getId() == parkingNames.get(s)){
+                            lati = i.getLatitude();
+                            longi = i.getLongitude();
+                            break;
+                        }
+                    }
+                    mapView.getMap().move(
+                            new CameraPosition(new com.yandex.mapkit.geometry.Point(lati, longi), 20.0f, 0.0f, 0.0f),
+                            new Animation(Animation.Type.SMOOTH, 0),
+                            null);
+                } else{
+                    Toast.makeText(HomeActivity.this, "Нет такой парковки", Toast.LENGTH_SHORT).show();
+                }
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+                searchView.setQuery("", false);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.getMap().move(
                 new CameraPosition(TARGET_LOCATION, 11.0f, 0.0f, 0.0f),
@@ -53,10 +93,18 @@ public class HomeActivity extends AppCompatActivity {
                 null);
         MapKit mapKit = MapKitFactory.getInstance();
         logicMap.getMarkers(pointsLive);
+        logicMap.getParkingsName(parkingNamesLive);
         pointsLive.observe(this, new Observer<List<Point>>() {
             @Override
             public void onChanged(List<Point> points) {
                 drawAllMarkers(mapView, points);
+            }
+        });
+        parkingNames.keySet().toArray();
+        parkingNamesLive.observe(this, new Observer<Map<String, Integer>>() {
+            @Override
+            public void onChanged(Map<String, Integer> stringIntegerMap) {
+                parkingNames = stringIntegerMap;
             }
         });
         mapView.getMap().getMapObjects().addTapListener(listener);

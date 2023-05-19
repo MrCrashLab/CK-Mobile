@@ -1,25 +1,17 @@
 package com.example.ckproject.viewmodel;
 
-import static com.gun0912.tedpermission.provider.TedPermissionProvider.context;
-
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.ckproject.MapService;
 import com.example.ckproject.ParkingService;
-import com.example.ckproject.R;
-import com.example.ckproject.listener.ButtonTapListener;
 import com.example.ckproject.model.Parking;
 import com.example.ckproject.model.Point;
-import com.example.ckproject.view.ParkingMapActivity;
-import com.squareup.picasso.Picasso;
 import com.yandex.mapkit.map.MapObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,6 +65,29 @@ public class LogicMap {
             @Override
             public void onFailure(Call<Parking> call, Throwable t) {
                 getParkingInfo(parking, parkingPointMap, mapObject);
+            }
+        });
+    }
+    public void getParkingsName(MutableLiveData<Map<String, Integer>> parkingListName){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ParkingService service = retrofit.create(ParkingService.class);
+        Call<List<Parking>> call = service.getListParking();
+        call.enqueue(new Callback<List<Parking>>() {
+            @Override
+            public void onResponse(Call<List<Parking>> call, Response<List<Parking>> response) {
+                Map<String, Integer> names = new HashMap<>();
+                for(Parking i : response.body()){
+                    names.put(i.getName(), i.getId_point());
+                }
+                parkingListName.setValue(names);
+            }
+
+            @Override
+            public void onFailure(Call<List<Parking>> call, Throwable t) {
+                getParkingsName(parkingListName);
             }
         });
     }
