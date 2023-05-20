@@ -59,10 +59,10 @@ public class HomeActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                if (parkingNames.keySet().contains(s) && pointsLive.getValue() != null){
-                    double lati = 59.952,  longi = 30.318;
-                    for(Point i : pointsLive.getValue()){
-                        if(i.getId() == parkingNames.get(s)){
+                if (parkingNames.keySet().contains(s) && pointsLive.getValue() != null) {
+                    double lati = 59.952, longi = 30.318;
+                    for (Point i : pointsLive.getValue()) {
+                        if (i.getId() == parkingNames.get(s)) {
                             lati = i.getLatitude();
                             longi = i.getLongitude();
                             break;
@@ -72,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
                             new CameraPosition(new com.yandex.mapkit.geometry.Point(lati, longi), 20.0f, 0.0f, 0.0f),
                             new Animation(Animation.Type.SMOOTH, 0),
                             null);
-                } else{
+                } else {
                     Toast.makeText(HomeActivity.this, "Нет такой парковки", Toast.LENGTH_SHORT).show();
                 }
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
